@@ -1,6 +1,6 @@
 ## [Unreleased][unreleased]
 
-This release contains breaking changes.
+With new plugins, many improvements and bug fixes, this release comes with breaking changes that will require your attention.
 
 ### Breaking changes
 
@@ -23,14 +23,18 @@ Old route                             New route
 
 The old routes are still maintained but will be removed in upcoming versions. Consider them **deprecated**.
 
-- Admin API:
+- Admin API
   - The route to retrieve enabled plugins is now under `/plugins/enabled`.
   - The route to retrieve a plugin's configuration schema is now under `/plugins/schema/{plugin name}`.
 
 #### Added
 
-- Plugins migrations. Each plugin can now have its own migration scripts if it needs to store data in your cluster. This is a step forward to improve Kong's pluggable architecture. [#443](https://github.com/Mashape/kong/pull/443)
-- The Basic Authentication plugin now supports credentials in the `Proxy-Authorization` header. [#460](https://github.com/Mashape/kong/issues/460)
+- Plugins
+  - **New Response Rate Limiting plugin**: Give a usage quota to your users based on a parameter in your response. [#247](https://github.com/Mashape/kong/pull/247)
+  - **New ACL (Access Control) plugin**: Configure authorizations for your Consumers. [#225](https://github.com/Mashape/kong/issues/225)
+  - Plugins migrations. Each plugin can now have its own migration scripts if it needs to store data in your cluster. This is a step forward to improve Kong's pluggable architecture. [#443](https://github.com/Mashape/kong/pull/443)
+  - Basic Authentication: the password field is now sha1 encrypted. [#33](https://github.com/Mashape/kong/issues/33)
+  - Basic Authentication: now supports credentials in the `Proxy-Authorization` header. [#460](https://github.com/Mashape/kong/issues/460)
 
 #### Changed
 
@@ -38,7 +42,17 @@ The old routes are still maintained but will be removed in upcoming versions. Co
 
 #### Fixed
 
-- Proper handling the `/oauth2/authorize` and `/oauth2/token` endpoints in the OAuth 2.0 Plugin when an API with a `path` is being consumed using the `public_dns` instead. [#503](https://github.com/Mashape/kong/issues/503)
+- Resolver
+  - Making a request with a querystring will now correctly match an API's path. [#496](https://github.com/Mashape/kong/pull/496)
+- Admin API
+  - Data associated to a given API/Consumer will correctly be deleted if related Consumer/API is deleted. [#107](https://github.com/Mashape/kong/issues/107) [#438](https://github.com/Mashape/kong/issues/438) [#504](https://github.com/Mashape/kong/issues/504)
+  - The `/api/{api_name_or_id}/plugins/{plugin_name_or_id}` changed to `/api/{api_name_or_id}/plugins/{plugin_id}` to avoid requesting the wrong plugin if two are configured for one API. [#482](https://github.com/Mashape/kong/pull/482)
+- Plugins
+  - Mashape Analytics: More robbust buffer and better error logging. [#471](https://github.com/Mashape/kong/pull/471)
+  - Mashape Analytics: Several ALF (API Log Format) serialization fixes. [#515](https://github.com/Mashape/kong/pull/515)
+  - Oauth2: A response is now returned on `http://kong:8001/consumers/{consumer}/oauth2/{oauth2_id}`. [#469](https://github.com/Mashape/kong/issues/469)
+  - Oauth2: Saving `authenticated_userid` on Password Grant. [#476](https://github.com/Mashape/kong/pull/476)
+  - Oauth2: Proper handling of the `/oauth2/authorize` and `/oauth2/token` endpoints in the OAuth 2.0 Plugin when an API with a `path` is being consumed using the `public_dns` instead. [#503](https://github.com/Mashape/kong/issues/503)
 
 ## [0.4.2] - 2015/08/10
 
