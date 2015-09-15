@@ -24,7 +24,7 @@ local function retrieve_hmac_fields(request, header_name, conf)
     local m, err = iterator()
     if err then
       ngx.log(ngx.ERR, err)
-      return
+      return 
     end
     
     if m and table.getn(m) > 0 then
@@ -46,9 +46,31 @@ local function retrieve_hmac_fields(request, header_name, conf)
 end
 
 
-local function validate_signature(request, hmakKey, signature, algorithm)
+local function validate_signature(request, hmacKey, signature, algorithm, defaultClockSkew)
   -- create new digest using the key and validate against the signature
+  -- hmac-sha1( VERB + "\n" + Content-md5 + "\n" + Content-Type + "\n" + Date, key)
+  -- ignore algorithm, only supporting hmac-sha1
   
+  local date = request.get_headers()["date"]
+  
+  -- validate clock skew
+  local requestTime = ngx.parse_http_time(date);  
+  if time == nil then
+    responses.send_HTTP_UNAUTHORIZED("Date header missing, HMAC signature cannot be verified")  
+  end
+  
+  local now = ngx.time;
+  local skew = math.abs(now - requestTime)
+  if skew > defaultClockSkew then
+    responses.send_HTTP_UNAUTHORIZED("HMAC signature expired")
+  end   
+  
+  -- validate signature
+  local src = request.get_method() + "\n" + request.get_headers()["content-md5"] + "\n" + request.get_headers()["content-type"] + "\n" + date 
+  local digest = ngx.hmac_sha1(hmacKey, src)
+  if not digest == signature then
+    return responses.send_HTTP_UNAUTHORIZED()
+  end 
 end
 
 local function load_hmacKey(keyId)
@@ -59,8 +81,8 @@ local function load_hmacKey(keyId)
       local result
       if err then
         return responses.send_HTTP_INTERNAL_SERVER_ERROR(err)
-      elseif #credentials > 0 then
-        result = hmackey[1]
+      elseif #hmacKey > 0 then
+        result = hmacKey[1]
       end
       return result
     end)
@@ -80,15 +102,11 @@ function _M.execute(conf)
   -- Try with the authorization header
   if not hmacId then
     hmacId, signature, algorithm = retrieve_hmac_fields(ngx.req, AUTHORIZATION, conf)
-    hmakKey = load_hmacKey(hmacId)
   end
   
-  local hmackey
-  if hmackey then
-    hmakKey = load_hmacKey(hmacId)
-  end
+  local hmackey = load_hmacKey(hmacId)
 
-  if not validate_signature(ngx.req, hmacKey, signature, algorithm) then
+  if not validate_signature(ngx.req, hmacKey, signature, algorithm, cong.clock_skew) then
     ngx.ctx.stop_phases = true -- interrupt other phases of this request
     return responses.send_HTTP_FORBIDDEN("HMAC signature does not match")
   end
