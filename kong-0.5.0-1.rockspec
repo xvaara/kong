@@ -29,7 +29,9 @@ dependencies = {
 
   "luasocket ~> 2.0.2-5",
   "lrexlib-pcre ~> 2.7.2-1",
-  "lua-llthreads2 ~> 0.1.3-1"
+  "lua-llthreads2 ~> 0.1.3-1",
+
+  "luajwt ~> 1.3-2"
 }
 build = {
   type = "builtin",
