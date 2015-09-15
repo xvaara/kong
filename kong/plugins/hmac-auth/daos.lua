@@ -14,7 +14,7 @@ local SCHEMA = {
 local HMACAuthCredentials = BaseDao:extend()
 
 function HMACAuthCredentials:new(properties)
-  self._table = "hmak_key"
+  self._table = "hmak_credentials"
   self._schema = SCHEMA
 
   HMACAuthCredentials.super.new(self, properties)
