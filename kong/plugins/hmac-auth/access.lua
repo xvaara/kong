@@ -10,11 +10,11 @@ local _M = {}
 
 
 local function retrieve_hmac_fields(request, header_name, conf)
-  local hmacId, hmakKey, signature, algorithm
+  local hmacId, secret, signature, algorithm
   local authorization_header = request.get_headers()[header_name]
 
   if authorization_header then
-    -- Authentication: hmac hmacKeyID:base64(hmac-sha1(VERB + "\n"  Content-md5 + "\n" + Content-Type + "\n" + Date))
+    -- Authentication: hmac username:base64(hmac-sha1(VERB + "\n"  Content-md5 + "\n" + Content-Type + "\n" + Date))
     local iterator, iter_err = ngx.re.gmatch(authorization_header, "\\s*[Hh]mac\\s*(.+)")
     if not iterator then
       ngx.log(ngx.ERR, iter_err)
@@ -46,7 +46,7 @@ local function retrieve_hmac_fields(request, header_name, conf)
 end
 
 
-local function validate_signature(request, hmacKey, signature, algorithm, defaultClockSkew)
+local function validate_signature(request, secret, signature, algorithm, defaultClockSkew)
   -- create new digest using the key and validate against the signature
   -- hmac-sha1( VERB + "\n" + Content-md5 + "\n" + Content-Type + "\n" + Date, key)
   -- ignore algorithm, only supporting hmac-sha1
@@ -67,27 +67,27 @@ local function validate_signature(request, hmacKey, signature, algorithm, defaul
   
   -- validate signature
   local src = request.get_method() + "\n" + request.get_headers()["content-md5"] + "\n" + request.get_headers()["content-type"] + "\n" + date 
-  local digest = ngx.hmac_sha1(hmacKey, src)
+  local digest = ngx.hmac_sha1(secret, src)
   if not digest == signature then
     return responses.send_HTTP_UNAUTHORIZED()
   end 
 end
 
-local function load_hmacKey(keyId)
-  local hmacKey
-  if keyId then
-    hmacKey = cache.get_or_set(cache.hmacauth_key(keyId), function()
-      local key, err = dao.hmacauth_credentials:find_by_keys { key_id = keyId }
+local function load_secret(username)
+  local secret
+  if username then
+    secret = cache.get_or_set(cache.hmacauth_key(username), function()
+      local key, err = dao.hmacauth_credentials:find_by_keys { username = username }
       local result
       if err then
         return responses.send_HTTP_INTERNAL_SERVER_ERROR(err)
-      elseif #hmacKey > 0 then
-        result = hmacKey[1]
+      elseif #secret > 0 then
+        result = secret[1]
       end
       return result
     end)
   end
-  return hmacKey
+  return secret
 end
 
 function _M.execute(conf)
@@ -104,9 +104,9 @@ function _M.execute(conf)
     hmacId, signature, algorithm = retrieve_hmac_fields(ngx.req, AUTHORIZATION, conf)
   end
   
-  local hmackey = load_hmacKey(hmacId)
+  local secret = load_secret(hmacId)
 
-  if not validate_signature(ngx.req, hmacKey, signature, algorithm, cong.clock_skew) then
+  if not validate_signature(ngx.req, secret, signature, algorithm, cong.clock_skew) then
     ngx.ctx.stop_phases = true -- interrupt other phases of this request
     return responses.send_HTTP_FORBIDDEN("HMAC signature does not match")
   end

@@ -181,6 +181,12 @@ build = {
     ["kong.plugins.ip-restriction.init_worker"] = "kong/plugins/ip-restriction/init_worker.lua",
     ["kong.plugins.ip-restriction.access"] = "kong/plugins/ip-restriction/access.lua",
     ["kong.plugins.ip-restriction.schema"] = "kong/plugins/ip-restriction/schema.lua",
+    
+    ["kong.plugins.hmac-auth.handler"] = "kong/plugins/hmac-auth/handler.lua",
+    ["kong.plugins.hmac-auth.access"] = "kong/plugins/hmac-auth/access.lua",
+    ["kong.plugins.hmac-auth.schema"] = "kong/plugins/hmac-auth/schema.lua",
+    ["kong.plugins.hmac-auth.api"] = "kong/plugins/hmac-auth/api.lua",
+    ["kong.plugins.hmac-auth.daos"] = "kong/plugins/hmac-auth/daos.lua",
 
     ["kong.api.app"] = "kong/api/app.lua",
     ["kong.api.crud_helpers"] = "kong/api/crud_helpers.lua",
