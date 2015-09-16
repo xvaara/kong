@@ -49,9 +49,6 @@ local single_route = {
 }
 
 return {
-  ["/consumers/:username_or_id/basic-auth/"] = global_route,
-  ["/consumers/:username_or_id/basic-auth/:id"] = single_route,
-  -- Deprecated in 0.5.0, maintained for backwards compatibility.
-  ["/consumers/:username_or_id/basicauth/"] = global_route,
-  ["/consumers/:username_or_id/basicauth/:id"] = single_route
+  ["/consumers/:username_or_id/hamc-auth/"] = global_route,
+  ["/consumers/:username_or_id/hmac-auth/:id"] = single_route,
 }

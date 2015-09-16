@@ -14,6 +14,6 @@ function HMACAuthHandler:access(conf)
   access.execute(conf)
 end
 
-HMACAuthHandler.PRIORITY = 1000
+HMACAuthHandler.PRIORITY = 999
 
 return HMACAuthHandler
