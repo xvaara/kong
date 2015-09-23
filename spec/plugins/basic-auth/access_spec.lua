@@ -10,7 +10,7 @@ describe("Authentication Plugin", function()
     spec_helper.prepare_db()
     spec_helper.insert_fixtures {
       api = {
-        {name = "tests basicauth", inbound_dns = "basicauth.com", upstream_url = "http://httpbin.org"}
+        {name = "tests basicauth", request_host = "basicauth.com", upstream_url = "http://httpbin.org"}
       },
       consumer = {
         {username = "basicauth_tests_consuser"}
@@ -45,7 +45,6 @@ describe("Authentication Plugin", function()
       assert.equal(403, status)
       assert.equal("Invalid authentication credentials", body.message)
     end)
-
 
     it("should return invalid credentials when the credential value is wrong in proxy-authorization", function()
       local response, status = http_client.get(PROXY_URL.."/get", {}, {host = "basicauth.com", ["proxy-authorization"] = "asd"})

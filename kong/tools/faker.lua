@@ -15,7 +15,7 @@ function Faker:fake_entity(type)
   if type == "api" then
     return {
       name = "random"..r,
-      inbound_dns = "random"..r..".com",
+      request_host = "random"..r..".com",
       upstream_url = "http://random"..r..".com"
     }
   elseif type == "consumer" then
@@ -57,7 +57,7 @@ function Faker:insert_from_table(entities_to_insert)
   -- Insert in order (for foreign relashionships)
   -- 1. consumers and APIs
   -- 2. credentials, which need references to inserted apis and consumers
-  for _, type in ipairs({ "api", "consumer", "plugin", "oauth2_credential", "basicauth_credential", "keyauth_credential" }) do
+  for _, type in ipairs({ "api", "consumer", "plugin", "oauth2_credential", "basicauth_credential", "keyauth_credential", "acl", "jwt_secret", "hmacauth_credential" }) do
     if entities_to_insert[type] then
       for i, entity in ipairs(entities_to_insert[type]) do
 

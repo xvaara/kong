@@ -13,21 +13,24 @@ You will need to update your configuration file. Replace the `plugins_available`
 ```yaml
 plugins_available:
   - ssl
-  - key-auth
-  - basic-auth
+  - jwt
+  - acl
+  - cors
   - oauth2
-  - rate-limiting
-  - response-ratelimiting
   - tcp-log
   - udp-log
   - file-log
   - http-log
-  - cors
+  - key-auth
+  - hmac-auth
+  - basic-auth
+  - ip-restriction
+  - mashape-analytics
   - request-transformer
   - response-transformer
   - request-size-limiting
-  - ip-restriction
-  - mashape-analytics
+  - rate-limiting
+  - response-ratelimiting
 ```
 
 You can still remove plugins you don't use for a lighter Kong.
@@ -91,7 +94,7 @@ Your cluster is now fully migrated to `0.5.0`.
 
 Some entities and properties were renamed to avoid confusion:
 
-- `public_dns` and `target_url` properties of APIs were respectively renamed to `inbound_dns` and `upstream_url`.
+- `public_dns` and `target_url` properties of APIs were respectively renamed to `request_host` and `upstream_url`.
 - `plugins_configurations` have been renamed to `plugins`, and their `value` property has been renamed to `config` to avoid confusions.
 - The Key authentication and Basic authentication plugins routes have changed:
 

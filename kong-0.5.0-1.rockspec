@@ -29,7 +29,8 @@ dependencies = {
 
   "luasocket ~> 2.0.2-5",
   "lrexlib-pcre ~> 2.7.2-1",
-  "lua-llthreads2 ~> 0.1.3-1"
+  "lua-llthreads2 ~> 0.1.3-1",
+  "luacrypto >= 0.3.2-1"
 }
 build = {
   type = "builtin",
@@ -96,6 +97,7 @@ build = {
     ["kong.plugins.base_plugin"] = "kong/plugins/base_plugin.lua",
 
     ["kong.plugins.basic-auth.migrations.cassandra"] = "kong/plugins/basic-auth/migrations/cassandra.lua",
+    ["kong.plugins.basic-auth.crypto"] = "kong/plugins/basic-auth/crypto.lua",
     ["kong.plugins.basic-auth.handler"] = "kong/plugins/basic-auth/handler.lua",
     ["kong.plugins.basic-auth.access"] = "kong/plugins/basic-auth/access.lua",
     ["kong.plugins.basic-auth.schema"] = "kong/plugins/basic-auth/schema.lua",
@@ -182,6 +184,20 @@ build = {
     ["kong.plugins.ip-restriction.access"] = "kong/plugins/ip-restriction/access.lua",
     ["kong.plugins.ip-restriction.schema"] = "kong/plugins/ip-restriction/schema.lua",
 
+    ["kong.plugins.acl.migrations.cassandra"] = "kong/plugins/acl/migrations/cassandra.lua",
+    ["kong.plugins.acl.handler"] = "kong/plugins/acl/handler.lua",
+    ["kong.plugins.acl.access"] = "kong/plugins/acl/access.lua",
+    ["kong.plugins.acl.schema"] = "kong/plugins/acl/schema.lua",
+    ["kong.plugins.acl.api"] = "kong/plugins/acl/api.lua",
+    ["kong.plugins.acl.daos"] = "kong/plugins/acl/daos.lua",
+
+    ["kong.plugins.acl.migrations.cassandra"] = "kong/plugins/acl/migrations/cassandra.lua",
+    ["kong.plugins.acl.handler"] = "kong/plugins/acl/handler.lua",
+    ["kong.plugins.acl.access"] = "kong/plugins/acl/access.lua",
+    ["kong.plugins.acl.schema"] = "kong/plugins/acl/schema.lua",
+    ["kong.plugins.acl.api"] = "kong/plugins/acl/api.lua",
+    ["kong.plugins.acl.daos"] = "kong/plugins/acl/daos.lua",
+
     ["kong.api.app"] = "kong/api/app.lua",
     ["kong.api.crud_helpers"] = "kong/api/crud_helpers.lua",
     ["kong.api.route_helpers"] = "kong/api/route_helpers.lua",
@@ -190,6 +206,20 @@ build = {
     ["kong.api.routes.consumers"] = "kong/api/routes/consumers.lua",
     ["kong.api.routes.plugins"] = "kong/api/routes/plugins.lua",
     ["kong.api.routes.plugins"] = "kong/api/routes/plugins.lua",
+
+    ["kong.plugins.jwt.migrations.cassandra"] = "kong/plugins/jwt/migrations/cassandra.lua",
+    ["kong.plugins.jwt.handler"] = "kong/plugins/jwt/handler.lua",
+    ["kong.plugins.jwt.access"] = "kong/plugins/jwt/access.lua",
+    ["kong.plugins.jwt.schema"] = "kong/plugins/jwt/schema.lua",
+    ["kong.plugins.jwt.api"] = "kong/plugins/jwt/api.lua",
+    ["kong.plugins.jwt.daos"] = "kong/plugins/jwt/daos.lua",
+    ["kong.plugins.jwt.jwt_parser"] = "kong/plugins/jwt/jwt_parser.lua",
+
+    ["kong.plugins.hmac-auth.handler"] = "kong/plugins/hmac-auth/handler.lua",
+    ["kong.plugins.hmac-auth.access"] = "kong/plugins/hmac-auth/access.lua",
+    ["kong.plugins.hmac-auth.schema"] = "kong/plugins/hmac-auth/schema.lua",
+    ["kong.plugins.hmac-auth.api"] = "kong/plugins/hmac-auth/api.lua",
+    ["kong.plugins.hmac-auth.daos"] = "kong/plugins/hmac-auth/daos.lua"
   },
   install = {
     conf = { "kong.yml" },

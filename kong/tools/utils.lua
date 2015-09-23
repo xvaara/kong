@@ -20,8 +20,10 @@ end
 -- @return number The size
 function _M.table_size(t)
   local res = 0
-  for _ in pairs(t) do
-    res = res + 1
+  if t then
+    for _ in pairs(t) do
+      res = res + 1
+    end
   end
   return res
 end
@@ -43,9 +45,11 @@ end
 -- @param val The value to check
 -- @return Returns `true` if the table contains the value, `false` otherwise
 function _M.table_contains(arr, val)
-  for _, v in pairs(arr) do
-    if v == val then
-      return true
+  if arr then
+    for _, v in pairs(arr) do
+      if v == val then
+        return true
+      end
     end
   end
   return false
@@ -117,7 +121,7 @@ function _M.load_module_if_exists(module_name)
   if status then
     return true, res
   -- Here we match any character because if a module has a dash '-' in its name, we would need to escape it.
-  elseif type(res) == "string" and string.find(res, "module '.*' not found") then
+  elseif type(res) == "string" and string.find(res, "module '"..module_name.."' not found", nil, true) then
     return false
   else
     error(res)
