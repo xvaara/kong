@@ -1,15 +1,14 @@
 # Microservice & API Management Layer
-
-[![Gitter Badge][gitter-badge]][gitter-url]
-
 [![][kong-logo]][kong-url]
 
-Kong was created at [Mashape][mashape-url] to secure, manage and extend Microservices & APIs, while handling billions of requests per month. Kong is powered by the battle-tested tech of **NGINX** with a focus on scalability, high performance & reliability. 
+Kong [was created](http://stackshare.io/mashape/how-mashape-manages-over-15-000-apis-microservices) at [Mashape](https://www.mashape.com) to secure, manage and extend Microservices & APIs, while handling billions of requests per month. Kong is powered by the battle-tested tech of **NGINX** with a focus on scalability, high performance & reliability.
 
 [Website](http://getkong.org) |
 [Documentation](http://getkong.org/docs) |
 [Installation](http://getkong.org/install) |
-[Mailing List](https://groups.google.com/forum/#!forum/konglayer) 
+[Mailing List][google-groups-url]
+
+[![Gitter Badge][gitter-badge]][gitter-url]
 
 
 ## Summary
@@ -38,7 +37,7 @@ Kong was created at [Mashape][mashape-url] to secure, manage and extend Microser
   - **ACL**: Acccess Control for your API Consumers.
   - **IP-restriction**: Whitelist or blacklist IPs that can make requests.
   - **Response-Rate-Limiting**: Rate limiting based on custom response header value.
-  - **Analytics**: Visualize, Inspect and Monitor API traffic with [Mashape Analytics](https://apianalytics.com).
+  - **Analytics**: Visualize, Inspect and Monitor API traffic with [Mashape Analytics](https://apianalytics.com) (Galileo).
   - **SSL**: Setup a specific SSL certificate for an underlying service or API.
   - **Monitoring**: Live monitoring provides key load and performance server metrics.
   - **Authentication**: Manage consumer credentials query string and header tokens.
@@ -64,47 +63,43 @@ We've load tested Kong and Cassandra on AWS; you can see our [benchmark report h
 Kong comes in many shapes. While this repository contains its core's source code, other repos are also under active development:
 
 - [Kong Docker](https://github.com/Mashape/docker-kong): A Dockerfile for running Kong in Docker.
+- [Kong Packages](https://github.com/Mashape/kong-distributions): Packaging scripts for deb, rpm and osx distributions.
 - [Kong Vagrant](https://github.com/Mashape/kong-vagrant): A Vagrantfile for provisioning a development ready environment for Kong.
 - [Kong Homebrew](https://github.com/Mashape/homebrew-kong): Homebrew Formula for Kong.
 - [Kong CloudFormation](https://github.com/Mashape/kong-dist-cloudformation): Kong in a 1-click deployment for AWS EC2
 - [Kong AWS AMI](https://aws.amazon.com/marketplace/pp/B014GHERVU/ref=srh_res_product_image?ie=UTF8&sr=0-2&qid=1440801656966): Kong AMI on the AWS Marketplace.
-- [Kong Packages](https://github.com/Mashape/kong-distributions): Packaging scripts for deb, rpm and osx distributions.
+- [Kong on Microsoft Azure](https://github.com/Mashape/kong-azure): Run Kong using Azure Resource Manager.
 
-## Community Resources and Tools 
+
+## Community Resources and Tools
 
 Resources:
 
-- [Kong mentioned for the Empire PaaS](http://engineering.remind.com/introducing-empire/)  
+- [Kong mentioned for the Empire PaaS](http://engineering.remind.com/introducing-empire/)
 - [Kong Getting Started Tutorials in Japanese](http://dev.classmethod.jp/etc/kong-api-aggregator/)
-- [Configuring Kong](http://rotlogix.com/2015/06/18/configuring-kong-for-a-services-layer/)
 - [Realtime API Management with Pushpin](http://blog.fanout.io/2015/07/14/realtime-api-management-pushpin-kong/)
 - [How to Create your own Plugin](http://streamdata.io/blog/developing-an-helloworld-kong-plugin/)
 - [Instaclustr Partners with Kong](https://www.instaclustr.com/instaclustr-partners-with-mashape-to-deliver-managed-cassandra-for-kong/)
-
-
+- [The story behind Kong](http://stackshare.io/mashape/how-mashape-manages-over-15-000-apis-microservices)
+- [How to deploy Kong on Azure](https://jeremiedevillard.wordpress.com/2015/10/12/deploy-kong-api-management-using-azure-resource-manager/)
 
 Tools:
 
 - [Kong on Tutum](https://github.com/Sillelien/docker-kong)
-- [Kong Admin GUI in JS](https://github.com/rsdevigo/jungle) 
+- [Kong Admin GUI in JS](https://github.com/rsdevigo/jungle)
 - [Kong Admin GUI in Py](https://github.com/vikingco/django-kong-admin)
+- [Kong UI](https://github.com/msaraf/kong-ui)
 - [Chef Cookbook for Kong](https://github.com/zuazo/kong-cookbook)
 - [Python Client for Kong API](https://pypi.python.org/pypi/python-kong/)
 - [Kong with Instaclustr](https://www.instaclustr.com/products/kong/)
-
-
-
 
 ## Roadmap
 
 You can find a detailed Roadmap of Kong on the [Wiki](https://github.com/Mashape/kong/wiki).
 
-## Development 
+## Development
 
-[![Build Status][travis-badge]][travis-url]
-[![Circle CI][circleci-badge]][circleci-url]
-
-If you are planning on developing on Kong (writing your own plugin or contribute to the core), you'll need a development installation.
+If you are planning on developing on Kong (writing your own plugin or contribute to the core), you'll need a development installation. The `next` branch holds the latest unreleased source code.
 
 #### Vagrant
 
@@ -112,11 +107,13 @@ You can use a Vagrant box running Kong and Cassandra that you can find at [Masha
 
 #### Source Install
 
-First, you will need to already have Kong installed. Install Kong by following one of the methods described at [getkong.org/download](http://getkong.org/download). Then, make sure you have downloaded [Cassandra](http://cassandra.apache.org/download/) and that it is running. These steps will override your Kong installation with the latest source from the master branch:
+First, you will need to already have Kong installed. Install Kong by following one of the methods described at [getkong.org/download](http://getkong.org/download). Then, make sure you have downloaded [Cassandra](http://cassandra.apache.org/download/) and that it is running. These steps will override your Kong installation with the latest source code:
 
 ```shell
+# clone the repo and use the next branch
 $ git clone https://github.com/Mashape/kong
 $ cd kong/
+$ git checkout next
 
 # Build and install Kong globally using Luarocks, overriding the version previously installed
 $ [sudo] make install
@@ -173,18 +170,11 @@ limitations under the License.
 ```
 
 [kong-url]: http://getkong.org/
-[kong-docs]: http://getkong.org/docs/
 
 [kong-logo]: http://i.imgur.com/4jyQQAZ.png
 [kong-benefits]: http://cl.ly/image/1B3J3b3h1H1c/Image%202015-07-07%20at%206.57.25%20PM.png
 
 [mashape-url]: https://www.mashape.com
-
-[travis-url]: https://travis-ci.org/Mashape/kong
-[travis-badge]: https://img.shields.io/travis/Mashape/kong.svg?style=flat
-
-[circleci-url]: https://circleci.com/gh/Mashape/kong
-[circleci-badge]: https://circleci.com/gh/Mashape/kong.svg?style=shield
 
 [gitter-url]: https://gitter.im/Mashape/kong
 [gitter-badge]: https://img.shields.io/badge/Gitter-Join%20Chat-blue.svg
