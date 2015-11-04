@@ -1,7 +1,7 @@
 # Microservice & API Management Layer
 [![][kong-logo]][kong-url]
 
-Kong [was created](http://stackshare.io/mashape/how-mashape-manages-over-15-000-apis-microservices) at [Mashape](https://www.mashape.com) to secure, manage and extend Microservices & APIs, while handling billions of requests per month. Kong is powered by the battle-tested tech of **NGINX** with a focus on scalability, high performance & reliability.
+Kong was [created](http://stackshare.io/mashape/how-mashape-manages-over-15-000-apis-microservices) to power the API Marketplace at [Mashape](https://www.mashape.com) to secure, manage and extend Microservices & APIs. Kong is backed by the battle-tested **NGINX** with a focus on scalability, high performance & reliability.
 
 [Website](http://getkong.org) |
 [Documentation](http://getkong.org/docs) |
@@ -83,6 +83,7 @@ Resources:
 - [Kong intro in Portuguese](https://www.youtube.com/watch?v=0OIWr1yLs_4)
 - [Kong tutorial in Japanese 1](http://dev.classmethod.jp/etc/kong-api-aggregator/)
 - [Kong tutorial in Japanese 2](http://www.ryuzee.com/contents/blog/7048)
+- [HAProxy + Kong](http://47ron.in/blog/2015/10/23/haproxy-in-the-era-of-microservices.html)
 
 Videos:
 
@@ -93,6 +94,7 @@ Videos:
 Tools:
 
 - [Kongfig](https://github.com/mybuilder/kongfig)
+- [Kongfig on Puppet Forge](https://forge.puppetlabs.com/mybuilder/kongfig)
 - [Kong on Tutum](https://github.com/Sillelien/docker-kong)
 - [Kong GUI in JS](https://github.com/rsdevigo/jungle)
 - [Kong GUI in Py](https://github.com/vikingco/django-kong-admin)
@@ -107,7 +109,9 @@ You can find a detailed Roadmap of Kong on the [Wiki](https://github.com/Mashape
 
 ## Development
 
-If you are planning on developing on Kong (writing your own plugin or contribute to the core), you'll need a development installation. The `next` branch holds the latest unreleased source code.
+If you are planning on developing on Kong, you'll need a development installation. The `next` branch holds the latest unreleased source code.
+
+You can read more about writing your own plugins in the [Plugin Development Guide](https://getkong.org/docs/latest/plugin-development/), or browse an online version of Kong's source code documentation in the [Public Lua API Reference](https://getkong.org/docs/0.5.x/lua-reference/).
 
 #### Vagrant
 
